@@ -1,4 +1,4 @@
-// uses strict mode so strings are not coerced, variables are not hoisted, etc... 
+// uses strict mode so strings are not coerced, variables are not hoisted, etc...
 'use strict';
 
 // brings in the assert module for unit testing
@@ -12,29 +12,34 @@ const rl = readline.createInterface({
 });
 
 // Write code here
+
 let paper = "paper"
 let rock = "rock"
 let scissors = "scissors"
 
+
 // the function that will be called by the unit test below
-const rockPaperScissors = (hand1, hand2) => {
+ 
+const rockPaperScissors = (hand1,  hand2) => {
   hand1 = hand1.trim();
   hand2 = hand2.trim();
   hand1 = hand1.toLowerCase();
   hand2 = hand2.toLowerCase();
 
-  if (hand1 === hand2) {
+  if (hand1 != rock && hand1 != scissors && hand1 != paper || hand2 != rock && hand2 != scissors && hand2 != paper) {
+    return "You must use rock, paper or scissors to play!"
+  }else if (hand1 === hand2) {
     return "It's a tie!"
- }
- else if  (hand1 === rock && hand2 === scissors || hand1 === paper && hand2 === rock || hand1 === scissors && hand2 === paper) {
-  return "Hand one wins!"
- }
- else if  (hand2 === rock && hand1 === scissors || hand2 === paper && hand1 === rock || hand2 === scissors && hand1 === paper) {
-  return "Hand two wins!"
- }
- else {
-  return "You must use rock, paper or scissors to play!"
- }
+  }
+  else if (hand1 === rock && hand2 === scissors || hand1 === paper && hand2 === rock || hand1 === scissors && hand2 === paper) {
+    return "Hand one wins!"
+  }
+  else if (hand2 === rock && hand1 === scissors || hand2 === paper && hand1 === rock || hand2 === scissors && hand1 === paper) {
+    return "Hand two wins!"
+  }
+  else {
+    return "You must use rock, paper or scissors to play!"
+  }
 }
 
 
@@ -73,6 +78,11 @@ if (typeof describe === 'function') {
       assert.equal(rockPaperScissors('rOcK', ' paper '), "Hand two wins!");
       assert.equal(rockPaperScissors('Paper', 'SCISSORS'), "Hand two wins!");
       assert.equal(rockPaperScissors('rock ', 'sCiSsOrs'), "Hand one wins!");
+    });
+    it('should return error if inputs are empty or invalid', () => {
+      assert.equal(rockPaperScissors(' ', ''), "You must use rock, paper or scissors to play!");
+      assert.equal(rockPaperScissors('cup', 'SCISSORS'), "You must use rock, paper or scissors to play!");
+      assert.equal(rockPaperScissors('rock ', 'pen'), "You must use rock, paper or scissors to play!");
     });
   });
 } else {
